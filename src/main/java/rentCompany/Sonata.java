@@ -3,6 +3,10 @@ package rentCompany;
 public class Sonata extends Car {
     private final double distance;
 
+    public Sonata() {
+        this(0);
+    }
+
     public Sonata(double distance) {
         this.distance = distance;
     }
