@@ -33,4 +33,12 @@ public class CarTest {
         assertThat(avante.getTripDistance()).isEqualTo(120);
         assertThat(k5.getTripDistance()).isEqualTo(130);
     }
+
+    @Test
+    @DisplayName("자동차의 이름 반환")
+    void car_name() {
+        assertThat(sonata.getName()).isEqualTo("Sonata");
+        assertThat(avante.getName()).isEqualTo("Avante");
+        assertThat(k5.getName()).isEqualTo("K5");
+    }
 }
