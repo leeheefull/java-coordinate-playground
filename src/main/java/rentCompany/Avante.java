@@ -3,10 +3,6 @@ package rentCompany;
 public class Avante extends Car {
     private final double distance;
 
-    public Avante() {
-        this(0);
-    }
-
     public Avante(double distance) {
         this.distance = distance;
     }
