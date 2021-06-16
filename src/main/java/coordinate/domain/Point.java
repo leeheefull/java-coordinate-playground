@@ -6,12 +6,26 @@ public class Point {
     private final int x;
     private final int y;
 
+    private static final String SEPARATOR = "[(,)]";
     private static final String NUMBER_REGEX = "^[0-9]*$";
 
-    public Point(String x, String y) {
-        validate(x, y);
-        this.x = Integer.parseInt(x);
-        this.y = Integer.parseInt(y);
+    public Point(String point) {
+        String[] value = inputSplit(point);
+        validate(value[1], value[2]);
+        this.x = Integer.parseInt(value[1]);
+        this.y = Integer.parseInt(value[2]);
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    private String[] inputSplit(String point) {
+        return point.split(SEPARATOR);
     }
 
     private void validate(String x, String y) {
