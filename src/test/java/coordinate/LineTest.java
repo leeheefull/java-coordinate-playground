@@ -31,4 +31,16 @@ public class LineTest {
     void not_line(String lineInfo) {
         assertThatThrownBy(() -> new Line(lineInfo)).isInstanceOf(InputNotLineException.class);
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {
+            "(0,4)-(0,0):4.0",
+            "(0,0)-(0,1):1.0",
+            "(6,0)-(0,0):6.0",
+            "(0,0)-(10,0):10.0"
+    }, delimiter = ':')
+    @DisplayName("선의 길이를 구하시오")
+    void get_line_length(String lineInfo, double expected) {
+        assertThat(new Line(lineInfo).getLength()).isEqualTo(expected);
+    }
 }

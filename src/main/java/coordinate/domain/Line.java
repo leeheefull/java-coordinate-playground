@@ -23,6 +23,12 @@ public class Line {
         return point2;
     }
 
+    public double getLength() {
+        double calX = Math.pow(point1.getX().getNumber() - point2.getX().getNumber(), 2);
+        double calY = Math.pow(point1.getY().getNumber() - point2.getY().getNumber(), 2);
+        return Math.sqrt(calX + calY);
+    }
+
     @Override
     public String toString() {
         return this.point1 + "-" + this.point2;
