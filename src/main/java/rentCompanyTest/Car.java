@@ -1,4 +1,4 @@
-package rentCompany;
+package rentCompanyTest;
 
 import java.util.Arrays;
 
