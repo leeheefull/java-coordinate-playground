@@ -1,4 +1,4 @@
-package rentCompanyTest;
+package rentCompany;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
