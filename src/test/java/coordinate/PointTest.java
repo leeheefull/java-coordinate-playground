@@ -18,8 +18,8 @@ public class PointTest {
         Point point = new Point(inputPoint);
 
         // when, then
-        assertThat(point.getX()).isEqualTo(expectedX);
-        assertThat(point.getY()).isEqualTo(expectedY);
+        assertThat(point.getX().getNumber()).isEqualTo(expectedX);
+        assertThat(point.getY().getNumber()).isEqualTo(expectedY);
     }
 
     @ParameterizedTest
