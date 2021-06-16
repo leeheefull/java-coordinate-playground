@@ -1,25 +1,43 @@
 package rentCompany;
 
-public abstract class Car {
-    /**
-     * 리터당 이동 거리. 즉, 연비
-     */
-    abstract double getDistancePerLiter();
+import java.util.Arrays;
 
-    /**
-     * 여행하려는 거리
-     */
-    abstract double getTripDistance();
+public enum Car {
+    SONATA("Sonata", 10),
+    AVANTE("Avante", 15),
+    K5("K5", 13);
 
-    /**
-     * 차종의 이름
-     */
-    abstract String getName();
+    private final String name;
+    private final int fuelEfficiency;
 
-    /**
-     * 주입해야할 연료량을 구한다.
-     */
-    double getChargeQuantity() {
-        return getTripDistance() / getDistancePerLiter();
+    private static final String COLON = " : ";
+    private static final String LITER = "리터";
+
+    Car(String name, int fuelEfficiency) {
+        this.name = name;
+        this.fuelEfficiency = fuelEfficiency;
+    }
+
+    public static Car of(String inputName) {
+        return Arrays.stream(values())
+                .filter(car -> car.name.equals(inputName))
+                .findFirst()
+                .get();
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public double getFuelEfficiency() {
+        return this.fuelEfficiency;
+    }
+
+    public double getChargeQuantity(int distance) {
+        return distance / getFuelEfficiency();
+    }
+
+    public String print(int distance) {
+        return name + COLON + (int) getChargeQuantity(distance) + LITER;
     }
 }

@@ -11,19 +11,23 @@ public class RentCompanyTest {
 
     @BeforeEach
     void setUp() {
-        company = RentCompany.create();
+        company = new RentCompany();
     }
 
     @Test
     @DisplayName("보고서가 일치 하는지")
     void equal_report() {
-        company.addCar(new Sonata(150));
-        company.addCar(new K5(260));
-        company.addCar(new Sonata(120));
-        company.addCar(new Avante(300));
-        company.addCar(new K5(390));
+        // given
+        company.addReport("Sonata", 150);
+        company.addReport("K5", 260);
+        company.addReport("Sonata", 120);
+        company.addReport("Avante", 300);
+        company.addReport("K5", 390);
 
-        String report = company.generateReport();
+        // when
+        String report = company.getReports();
+
+        // then
         assertThat(report).isEqualTo(
                 "Sonata : 15리터" + "\n" +
                         "K5 : 20리터" + "\n" +

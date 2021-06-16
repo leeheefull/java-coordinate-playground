@@ -1,27 +1,20 @@
 package rentCompany;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class RentCompany {
-    private final List<Car> cars = new ArrayList<>();
+    private final Cars cars = new Cars();
 
-    private static final String COLON = " : ";
-    private static final String LITER = "리터";
     private static final String LINE_BREAK = "\n";
 
-    public static RentCompany create() {
-        return new RentCompany();
+    public void addReport(String name, int distance) {
+        this.cars.addCar(name, distance);
     }
 
-    public void addCar(Car car) {
-        this.cars.add(car);
-    }
-
-    public String generateReport() {
-        return this.cars.stream()
-                .map(car -> car.getName() + COLON + (int) car.getChargeQuantity() + LITER)
+    public String getReports() {
+        return IntStream.range(0, this.cars.size())
+                .mapToObj(i -> Car.of(this.cars.getCarNames().get(i)).print(this.cars.getCarDistances().get(i)))
                 .collect(Collectors.joining(LINE_BREAK));
     }
 }
