@@ -7,22 +7,27 @@ public class Number {
 
     private static final String NUMBER_REGEX = "^[0-9]*$";
 
-    public Number(String number) {
-        validate(number);
-        this.number = Integer.parseInt(number);
+    public Number(String numberInfo) {
+        validate(numberInfo);
+        this.number = Integer.parseInt(numberInfo);
     }
 
     public int getNumber() {
-        return number;
+        return this.number;
     }
 
-    private void validate(String number) {
-        if (!isNumber(number)) {
+    @Override
+    public String toString() {
+        return this.number + "";
+    }
+
+    private void validate(String numberInfo) {
+        if (!isNumber(numberInfo)) {
             throw new InputNotNumberException();
         }
     }
 
-    private boolean isNumber(String number) {
-        return number.matches(NUMBER_REGEX);
+    private boolean isNumber(String numberInfo) {
+        return numberInfo.matches(NUMBER_REGEX);
     }
 }

@@ -19,7 +19,7 @@ public class NumberTest {
     }
 
     @Test
-    @DisplayName("숫자가 아닌 값이 입력되면 예외")
+    @DisplayName("숫자가 아닌 값이 입력될 경우")
     void not_number() {
         assertThatThrownBy(() -> new Number("p")).isInstanceOf(InputNotNumberException.class);
     }
