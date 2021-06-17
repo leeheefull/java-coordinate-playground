@@ -46,7 +46,13 @@ public class Line {
     }
 
     private boolean isLine(String lineInfo) {
-        return lineInfo.contains(SEPARATOR);
+        return getSeparatorCnt(lineInfo) == 1;
+    }
+
+    private int getSeparatorCnt(String lineInfo) {
+        return (int) lineInfo.chars()
+                .filter(c -> c == SEPARATOR.charAt(0))
+                .count();
     }
 
     private String[] inputSplit(String lineInfo) {
