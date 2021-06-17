@@ -7,8 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 public class TriangleTest {
     @ParameterizedTest
@@ -29,5 +28,12 @@ public class TriangleTest {
     @DisplayName("삼각형이 아닌 경우")
     void not_triangle(String triangleInfo) {
         assertThatThrownBy(() -> new Triangle(triangleInfo)).isInstanceOf(InputNotTriangleException.class);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"(10,10)-(14,15)-(20,8):29"}, delimiter = ':')
+    @DisplayName("삼각형 면적 구하기")
+    void triangle_area(String triangleInfo, int expected) {
+        assertThat(Math.round(new Triangle(triangleInfo).getArea())).isEqualTo(expected);
     }
 }

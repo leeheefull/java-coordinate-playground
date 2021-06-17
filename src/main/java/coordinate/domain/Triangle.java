@@ -3,6 +3,7 @@ package coordinate.domain;
 import coordinate.exception.InputNotTriangleException;
 import coordinate.util.Coordinate;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,9 +26,20 @@ public class Triangle implements Drawable {
         return points;
     }
 
-    // 구현 중
-    public int getArea() {
-        return 0;
+    public double getArea() {
+        List<Line> lines = Arrays.asList(
+                new Line(points.get(0) + SEPARATOR + points.get(1)),
+                new Line(points.get(1) + SEPARATOR + points.get(2)),
+                new Line(points.get(2) + SEPARATOR + points.get(0))
+        );
+        double heron = lines.stream()
+                .map(Line::getLength)
+                .mapToDouble(Double::doubleValue)
+                .sum() / 2;
+        return Math.sqrt(heron
+                * (heron - lines.get(0).getLength())
+                * (heron - lines.get(1).getLength())
+                * (heron - lines.get(2).getLength()));
     }
 
     @Override
