@@ -1,7 +1,6 @@
 package coordinate;
 
 import coordinate.domain.Point;
-import coordinate.exception.InputNotNumberException;
 import coordinate.exception.InputNotPointException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

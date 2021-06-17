@@ -1,37 +1,42 @@
 package coordinate.domain;
 
 import coordinate.exception.InputNotLineException;
+import coordinate.util.Coordinate;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class Line {
-    private final Point point1;
-    private final Point point2;
+    private final List<Point> points;
 
     private static final String SEPARATOR = "-";
 
     public Line(String lineInfo) {
         validate(lineInfo);
         String[] pointInfos = inputSplit(lineInfo);
-        this.point1 = new Point(pointInfos[0]);
-        this.point2 = new Point(pointInfos[1]);
+        this.points = Arrays.asList(
+                new Point(pointInfos[0]),
+                new Point(pointInfos[1])
+        );
     }
 
-    public Point getPoint1() {
-        return point1;
-    }
-
-    public Point getPoint2() {
-        return point2;
+    public List<Point> getPoints() {
+        return points;
     }
 
     public double getLength() {
-        double calX = Math.pow(point1.getX().getNumber() - point2.getX().getNumber(), 2);
-        double calY = Math.pow(point1.getY().getNumber() - point2.getY().getNumber(), 2);
+        double calX = Math.pow(points.get(0).getX().getNumber() - points.get(1).getX().getNumber(), 2);
+        double calY = Math.pow(points.get(0).getY().getNumber() - points.get(1).getY().getNumber(), 2);
         return Math.sqrt(calX + calY);
+    }
+
+    public String drawLine() {
+        return Coordinate.print(this.getPoints());
     }
 
     @Override
     public String toString() {
-        return this.point1 + "-" + this.point2;
+        return this.points.get(0) + "-" + this.points.get(1);
     }
 
     private void validate(String lineInfo) {
