@@ -1,9 +1,6 @@
 package coordinate.util;
 
-import coordinate.domain.Line;
 import coordinate.domain.Point;
-import coordinate.domain.Rectangle;
-import coordinate.domain.Triangle;
 
 import java.util.List;
 
@@ -79,11 +76,5 @@ public class Coordinate {
 
     private static boolean isPointPosition(int i, int j, Point point) {
         return point.getY().getNumber() == i && point.getX().getNumber() == j;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new Line("(10,10)-(14,15)").draw());
-        System.out.println(new Rectangle("(10,10)-(22,10)-(22,18)-(10,18)").draw());
-        System.out.println(new Triangle("(10,10)-(14,15)-(20,8)").draw());
     }
 }

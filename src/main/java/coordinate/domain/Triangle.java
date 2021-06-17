@@ -3,48 +3,38 @@ package coordinate.domain;
 import coordinate.exception.InputNotTriangleException;
 import coordinate.util.Coordinate;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Triangle implements Drawable {
     private final List<Point> points;
+    private final List<Line> lines;
 
     private static final int SEPARATOR_CNT = 2;
 
     public Triangle(String triangleInfo) {
         validate(triangleInfo);
         String[] pointInfos = inputSplit(triangleInfo);
-        this.points = Arrays.asList(
-                new Point(pointInfos[0]),
-                new Point(pointInfos[1]),
-                new Point(pointInfos[2])
-        );
+        this.points = convertPoints(pointInfos);
+        this.lines = convertLines();
     }
 
-    public List<Point> getPoints() {
+    public List<Point> convertPoints() {
         return points;
     }
 
     public double getArea() {
-        List<Line> lines = Arrays.asList(
-                new Line(points.get(0) + SEPARATOR + points.get(1)),
-                new Line(points.get(1) + SEPARATOR + points.get(2)),
-                new Line(points.get(2) + SEPARATOR + points.get(0))
-        );
-        double heron = lines.stream()
-                .map(Line::getLength)
-                .mapToDouble(Double::doubleValue)
-                .sum() / 2;
+        double heron = getHeron();
         return Math.sqrt(heron
-                * (heron - lines.get(0).getLength())
-                * (heron - lines.get(1).getLength())
-                * (heron - lines.get(2).getLength()));
+                * (heron - this.lines.get(0).getLength())
+                * (heron - this.lines.get(1).getLength())
+                * (heron - this.lines.get(2).getLength())
+        );
     }
 
     @Override
     public String draw() {
-        return Coordinate.print(this.getPoints());
+        return Coordinate.print(this.convertPoints());
     }
 
     private void validate(String triangleInfo) {
@@ -65,5 +55,28 @@ public class Triangle implements Drawable {
 
     private String[] inputSplit(String triangleInfo) {
         return triangleInfo.split(SEPARATOR);
+    }
+
+    private List<Point> convertPoints(String[] pointInfos) {
+        return Arrays.asList(
+                new Point(pointInfos[0]),
+                new Point(pointInfos[1]),
+                new Point(pointInfos[2])
+        );
+    }
+
+    private List<Line> convertLines() {
+        return Arrays.asList(
+                new Line(points.get(0) + SEPARATOR + points.get(1)),
+                new Line(points.get(1) + SEPARATOR + points.get(2)),
+                new Line(points.get(2) + SEPARATOR + points.get(0))
+        );
+    }
+
+    private double getHeron() {
+        return this.lines.stream()
+                .map(Line::getLength)
+                .mapToDouble(Double::doubleValue)
+                .sum() / 2;
     }
 }

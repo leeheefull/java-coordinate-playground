@@ -9,9 +9,14 @@ public class Rectangle extends Square {
         validate();
     }
 
-    // 구현 중
-    public int getArea() {
-        return 0;
+    public double getArea() {
+        double lineLength1 = this.getLines().get(0).getLength();
+        double lineLength2 = this.getLines().stream()
+                .map(Line::getLength)
+                .filter(l -> l != lineLength1)
+                .findAny()
+                .get();
+        return lineLength1 * lineLength2;
     }
 
     private void validate() {
