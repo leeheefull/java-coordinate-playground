@@ -1,7 +1,6 @@
 package coordinate.domain;
 
 import coordinate.exception.InputNotRectangleException;
-import coordinate.util.Coordinate;
 
 public class Rectangle extends Square {
 
@@ -13,10 +12,6 @@ public class Rectangle extends Square {
     // 구현 중
     public int getArea() {
         return 0;
-    }
-
-    public String drawRectangle() {
-        return Coordinate.print(this.getPoints());
     }
 
     private void validate() {

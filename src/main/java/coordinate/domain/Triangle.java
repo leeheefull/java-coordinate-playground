@@ -6,10 +6,10 @@ import coordinate.util.Coordinate;
 import java.util.Arrays;
 import java.util.List;
 
-public class Triangle {
+public class Triangle implements Drawable {
     private final List<Point> points;
 
-    private static final String SEPARATOR = "-";
+    private static final int SEPARATOR_CNT = 2;
 
     public Triangle(String triangleInfo) {
         validate(triangleInfo);
@@ -30,7 +30,8 @@ public class Triangle {
         return 0;
     }
 
-    public String drawTriangle() {
+    @Override
+    public String draw() {
         return Coordinate.print(this.getPoints());
     }
 
@@ -41,7 +42,7 @@ public class Triangle {
     }
 
     private boolean isTriangle(String triangleInfo) {
-        return getSeparatorCnt(triangleInfo) == 2;
+        return getSeparatorCnt(triangleInfo) == SEPARATOR_CNT;
     }
 
     private int getSeparatorCnt(String triangleInfo) {

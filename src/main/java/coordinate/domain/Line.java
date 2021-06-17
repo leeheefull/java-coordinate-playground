@@ -6,10 +6,10 @@ import coordinate.util.Coordinate;
 import java.util.Arrays;
 import java.util.List;
 
-public class Line {
+public class Line implements Drawable {
     private final List<Point> points;
 
-    private static final String SEPARATOR = "-";
+    private static final int SEPARATOR_CNT = 1;
 
     public Line(String lineInfo) {
         validate(lineInfo);
@@ -30,13 +30,14 @@ public class Line {
         return Math.sqrt(calX + calY);
     }
 
-    public String drawLine() {
+    @Override
+    public String draw() {
         return Coordinate.print(this.getPoints());
     }
 
     @Override
     public String toString() {
-        return this.points.get(0) + "-" + this.points.get(1);
+        return this.points.get(0) + SEPARATOR + this.points.get(1);
     }
 
     private void validate(String lineInfo) {
@@ -46,7 +47,7 @@ public class Line {
     }
 
     private boolean isLine(String lineInfo) {
-        return getSeparatorCnt(lineInfo) == 1;
+        return getSeparatorCnt(lineInfo) == SEPARATOR_CNT;
     }
 
     private int getSeparatorCnt(String lineInfo) {

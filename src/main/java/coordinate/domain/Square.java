@@ -1,14 +1,15 @@
 package coordinate.domain;
 
 import coordinate.exception.InputNotSquareException;
+import coordinate.util.Coordinate;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class Square {
+public class Square implements Drawable {
     private final List<Point> points;
 
-    private static final String SEPARATOR = "-";
+    private static final int SEPARATOR_CNT = 3;
 
     public Square(String squareInfo) {
         validate(squareInfo);
@@ -25,6 +26,11 @@ public class Square {
         return points;
     }
 
+    @Override
+    public String draw() {
+        return Coordinate.print(this.getPoints());
+    }
+
     private void validate(String squareInfo) {
         if (!isSquare(squareInfo)) {
             throw new InputNotSquareException();
@@ -32,7 +38,7 @@ public class Square {
     }
 
     private boolean isSquare(String squareInfo) {
-        return getSeparatorCnt(squareInfo) == 3;
+        return getSeparatorCnt(squareInfo) == SEPARATOR_CNT;
     }
 
     private int getSeparatorCnt(String squareInfo) {
