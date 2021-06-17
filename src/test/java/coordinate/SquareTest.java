@@ -14,7 +14,7 @@ public class SquareTest {
     @ParameterizedTest
     @CsvSource(value = {"(1,2)-(3,4)-(5,4)-(5,5):(1,2):(3,4):(5,4):(5,5)"}, delimiter = ':')
     @DisplayName("사각형이 잘 저장되는지")
-    void save_line(String squareInfo, String point1, String point2, String point3, String point4) {
+    void save_square(String squareInfo, String point1, String point2, String point3, String point4) {
         assertThat(new Square(squareInfo).getPoints().get(0).toString()).isEqualTo(point1);
         assertThat(new Square(squareInfo).getPoints().get(1).toString()).isEqualTo(point2);
         assertThat(new Square(squareInfo).getPoints().get(2).toString()).isEqualTo(point3);
