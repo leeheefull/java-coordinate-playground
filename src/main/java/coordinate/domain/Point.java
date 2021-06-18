@@ -8,6 +8,9 @@ public class Point {
     private final Number y;
 
     private static final String SEPARATOR = "[,)(]";
+    private static final String SEPARATOR_1 = "(";
+    private static final String SEPARATOR_2 = ",";
+    private static final String SEPARATOR_3 = ")";
 
     public Point(String pointInfo) throws InputIndexOutNumberException {
         validate(pointInfo);
@@ -26,7 +29,7 @@ public class Point {
 
     @Override
     public String toString() {
-        return "(" + this.x + "," + this.y + ')';
+        return SEPARATOR_1 + this.x + SEPARATOR_2 + this.y + SEPARATOR_3;
     }
 
     private void validate(String pointInfo) {
@@ -36,7 +39,7 @@ public class Point {
     }
 
     private boolean isPoint(String pointInfo) {
-        return pointInfo.contains("(") && pointInfo.contains(")") && pointInfo.contains(",");
+        return pointInfo.contains(SEPARATOR_1) && pointInfo.contains(SEPARATOR_3) && pointInfo.contains(SEPARATOR_2);
     }
 
     private String[] inputSplit(String pointInfo) {

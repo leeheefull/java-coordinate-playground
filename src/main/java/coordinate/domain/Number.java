@@ -7,6 +7,8 @@ public class Number {
     private final int number;
 
     private static final String NUMBER_REGEX = "^[0-9]*$";
+    private static final int MIN_NUMBER = 1;
+    private static final int MAX_NUMBER = 24;
 
     public Number(String numberInfo) throws InputIndexOutNumberException {
         validate(numberInfo);
@@ -37,6 +39,6 @@ public class Number {
 
     private boolean isOver(String numberInfo) {
         int number = Integer.parseInt(numberInfo);
-        return number < 1 || 24 < number;
+        return number < MIN_NUMBER || MAX_NUMBER < number;
     }
 }

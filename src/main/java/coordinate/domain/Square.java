@@ -67,7 +67,7 @@ public class Square implements Drawable {
                 new Line(points.get(0) + SEPARATOR + points.get(1)),
                 new Line(points.get(1) + SEPARATOR + points.get(2)),
                 new Line(points.get(2) + SEPARATOR + points.get(3)),
-                new Line(points.get(2) + SEPARATOR + points.get(0))
+                new Line(points.get(3) + SEPARATOR + points.get(0))
         );
     }
 }

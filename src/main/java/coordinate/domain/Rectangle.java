@@ -3,7 +3,12 @@ package coordinate.domain;
 import coordinate.exception.InputIndexOutNumberException;
 import coordinate.exception.InputNotRectangleException;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Rectangle extends Square {
+    private static final int DIFFERENT_LINE_CNT_1 = 1;
+    private static final int DIFFERENT_LINE_CNT_2 = 2;
 
     public Rectangle(String rectangleInfo) throws InputIndexOutNumberException {
         super(rectangleInfo);
@@ -11,23 +16,32 @@ public class Rectangle extends Square {
     }
 
     public double getArea() {
-        double lineLength1 = this.getLines().get(0).getLength();
-        double lineLength2 = this.getLines().stream()
-                .map(Line::getLength)
-                .filter(l -> l != lineLength1)
-                .findAny()
+        if (isPerfectSquare()) {
+            return Math.pow(getTwoDifferentLine().get(0), 2);
+        }
+        return getTwoDifferentLine().stream()
+                .reduce((a, b) -> a * b)
                 .get();
-        return lineLength1 * lineLength2;
     }
 
     private void validate() {
-        if (!isRectangle()) {
+        if (!isRectangle() && !isPerfectSquare()) {
             throw new InputNotRectangleException();
         }
     }
 
-    // 구현 중
+    private boolean isPerfectSquare() {
+        return getTwoDifferentLine().size() == DIFFERENT_LINE_CNT_1;
+    }
+
     private boolean isRectangle() {
-        return true;
+        return getTwoDifferentLine().size() == DIFFERENT_LINE_CNT_2;
+    }
+
+    private List<Double> getTwoDifferentLine() {
+        return this.getLines().stream()
+                .map(Line::getLength)
+                .distinct()
+                .collect(Collectors.toList());
     }
 }

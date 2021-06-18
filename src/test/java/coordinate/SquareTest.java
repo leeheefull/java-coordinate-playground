@@ -1,6 +1,5 @@
 package coordinate;
 
-import coordinate.domain.Rectangle;
 import coordinate.domain.Square;
 import coordinate.exception.InputIndexOutNumberException;
 import coordinate.exception.InputNotSquareException;
@@ -32,12 +31,5 @@ public class SquareTest {
     @DisplayName("사각형이 아닌 경우")
     void not_square(String squareInfo) {
         assertThatThrownBy(() -> new Square(squareInfo)).isInstanceOf(InputNotSquareException.class);
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"(10,10)-(22,10)-(22,18)-(10,18):96"}, delimiter = ':')
-    @DisplayName("직사각형 면적 구하기")
-    void rectangle_area(String rectangleInfo, int expected) throws InputIndexOutNumberException {
-        assertThat(Math.round(new Rectangle(rectangleInfo).getArea())).isEqualTo(expected);
     }
 }
