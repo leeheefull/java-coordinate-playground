@@ -1,5 +1,6 @@
 package coordinate.domain;
 
+import coordinate.exception.InputIndexOutNumberException;
 import coordinate.exception.InputNotPointException;
 
 public class Point {
@@ -8,7 +9,7 @@ public class Point {
 
     private static final String SEPARATOR = "[,)(]";
 
-    public Point(String pointInfo) {
+    public Point(String pointInfo) throws InputIndexOutNumberException {
         validate(pointInfo);
         String[] numberInfos = inputSplit(pointInfo);
         this.x = new Number(numberInfos[1]);

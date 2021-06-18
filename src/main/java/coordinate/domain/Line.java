@@ -1,5 +1,6 @@
 package coordinate.domain;
 
+import coordinate.exception.InputIndexOutNumberException;
 import coordinate.exception.InputNotLineException;
 import coordinate.util.Coordinate;
 
@@ -11,13 +12,10 @@ public class Line implements Drawable {
 
     private static final int SEPARATOR_CNT = 1;
 
-    public Line(String lineInfo) {
+    public Line(String lineInfo) throws InputIndexOutNumberException {
         validate(lineInfo);
         String[] pointInfos = inputSplit(lineInfo);
-        this.points = Arrays.asList(
-                new Point(pointInfos[0]),
-                new Point(pointInfos[1])
-        );
+        this.points = convertPoints(pointInfos);
     }
 
     public List<Point> getPoints() {
@@ -58,5 +56,12 @@ public class Line implements Drawable {
 
     private String[] inputSplit(String lineInfo) {
         return lineInfo.split(SEPARATOR);
+    }
+
+    private List<Point> convertPoints(String[] pointInfos) throws InputIndexOutNumberException {
+        return Arrays.asList(
+                new Point(pointInfos[0]),
+                new Point(pointInfos[1])
+        );
     }
 }

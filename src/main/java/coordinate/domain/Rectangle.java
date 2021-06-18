@@ -1,10 +1,11 @@
 package coordinate.domain;
 
+import coordinate.exception.InputIndexOutNumberException;
 import coordinate.exception.InputNotRectangleException;
 
 public class Rectangle extends Square {
 
-    public Rectangle(String rectangleInfo) {
+    public Rectangle(String rectangleInfo) throws InputIndexOutNumberException {
         super(rectangleInfo);
         validate();
     }

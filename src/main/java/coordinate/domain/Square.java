@@ -1,5 +1,6 @@
 package coordinate.domain;
 
+import coordinate.exception.InputIndexOutNumberException;
 import coordinate.exception.InputNotSquareException;
 import coordinate.util.Coordinate;
 
@@ -12,7 +13,7 @@ public class Square implements Drawable {
 
     private static final int SEPARATOR_CNT = 3;
 
-    public Square(String squareInfo) {
+    public Square(String squareInfo) throws InputIndexOutNumberException {
         validate(squareInfo);
         String[] pointInfos = inputSplit(squareInfo);
         this.points = convertPoints(pointInfos);
@@ -52,7 +53,7 @@ public class Square implements Drawable {
         return squareInfo.split(SEPARATOR);
     }
 
-    private List<Point> convertPoints(String[] pointInfos) {
+    private List<Point> convertPoints(String[] pointInfos) throws InputIndexOutNumberException {
         return Arrays.asList(
                 new Point(pointInfos[0]),
                 new Point(pointInfos[1]),
@@ -61,7 +62,7 @@ public class Square implements Drawable {
         );
     }
 
-    private List<Line> convertLines() {
+    private List<Line> convertLines() throws InputIndexOutNumberException {
         return Arrays.asList(
                 new Line(points.get(0) + SEPARATOR + points.get(1)),
                 new Line(points.get(1) + SEPARATOR + points.get(2)),

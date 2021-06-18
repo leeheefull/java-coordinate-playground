@@ -1,5 +1,6 @@
 package coordinate.domain;
 
+import coordinate.exception.InputIndexOutNumberException;
 import coordinate.exception.InputNotTriangleException;
 import coordinate.util.Coordinate;
 
@@ -12,7 +13,7 @@ public class Triangle implements Drawable {
 
     private static final int SEPARATOR_CNT = 2;
 
-    public Triangle(String triangleInfo) {
+    public Triangle(String triangleInfo) throws InputIndexOutNumberException {
         validate(triangleInfo);
         String[] pointInfos = inputSplit(triangleInfo);
         this.points = convertPoints(pointInfos);
@@ -57,7 +58,7 @@ public class Triangle implements Drawable {
         return triangleInfo.split(SEPARATOR);
     }
 
-    private List<Point> convertPoints(String[] pointInfos) {
+    private List<Point> convertPoints(String[] pointInfos) throws InputIndexOutNumberException {
         return Arrays.asList(
                 new Point(pointInfos[0]),
                 new Point(pointInfos[1]),
@@ -65,7 +66,7 @@ public class Triangle implements Drawable {
         );
     }
 
-    private List<Line> convertLines() {
+    private List<Line> convertLines() throws InputIndexOutNumberException {
         return Arrays.asList(
                 new Line(points.get(0) + SEPARATOR + points.get(1)),
                 new Line(points.get(1) + SEPARATOR + points.get(2)),
