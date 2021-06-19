@@ -15,9 +15,9 @@ public class TriangleTest {
     @CsvSource(value = {"(1,2)-(3,4)-(5,4):(1,2):(3,4):(5,4)"}, delimiter = ':')
     @DisplayName("삼각형이 잘 저장되는지")
     void save_triangle(String triangleInfo, String point1, String point2, String point3) throws InputIndexOutNumberException {
-        assertThat(new Triangle(triangleInfo).convertPoints().get(0).toString()).isEqualTo(point1);
-        assertThat(new Triangle(triangleInfo).convertPoints().get(1).toString()).isEqualTo(point2);
-        assertThat(new Triangle(triangleInfo).convertPoints().get(2).toString()).isEqualTo(point3);
+        assertThat(new Triangle(triangleInfo).getPoints().get(0).toString()).isEqualTo(point1);
+        assertThat(new Triangle(triangleInfo).getPoints().get(1).toString()).isEqualTo(point2);
+        assertThat(new Triangle(triangleInfo).getPoints().get(2).toString()).isEqualTo(point3);
     }
 
     @ParameterizedTest

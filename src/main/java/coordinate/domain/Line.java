@@ -25,13 +25,24 @@ public class Line {
     }
 
     public double getLength() {
-        double calX = Math.pow(points.get(0).getX().getNumber() - points.get(1).getX().getNumber(), 2);
-        double calY = Math.pow(points.get(0).getY().getNumber() - points.get(1).getY().getNumber(), 2);
+        double calX = Math.pow(getXGap(), 2);
+        double calY = Math.pow(getYGap(), 2);
         return Math.sqrt(calX + calY);
     }
 
     public String draw() {
         return Coordinate.print(this.getPoints());
+    }
+
+    public double getInclination() {
+        return getYGap() * 1.0 / getXGap();
+    }
+
+    public boolean containPoint(Point meetPoint) {
+        return this.points.stream()
+                .filter(point -> point.getX().getNumber() == meetPoint.getX().getNumber())
+                .filter(point -> point.getY().getNumber() == meetPoint.getY().getNumber())
+                .count() == 1;
     }
 
     @Override
@@ -66,5 +77,13 @@ public class Line {
                 new Point(pointInfos[0]),
                 new Point(pointInfos[1])
         );
+    }
+
+    private int getXGap() {
+        return this.points.get(1).getX().getNumber() - this.points.get(0).getX().getNumber();
+    }
+
+    private int getYGap() {
+        return this.points.get(1).getY().getNumber() - this.points.get(0).getY().getNumber();
     }
 }

@@ -35,21 +35,24 @@ public class RectangleTest {
     @ParameterizedTest
     @ValueSource(strings = {"(1,2)-(3,4)-(5,4)-(5,5)"})
     @DisplayName("직사각형이 아닌 경우")
-    void not_square(String rectangleInfo) {
-        assertThatThrownBy(() -> new Rectangle(rectangleInfo)).isInstanceOf(InputNotRectangleException.class);
+    void not_rectangle(String rectangleInfo) {
+        assertThatThrownBy(() -> new Rectangle(rectangleInfo))
+                .isInstanceOf(InputNotRectangleException.class);
     }
 
     @ParameterizedTest
     @CsvSource(value = {"(1,1)-(1,2)-(2,2)-(2,1):1"}, delimiter = ':')
     @DisplayName("정사각형 면적 구하기")
     void perfect_square_area(String rectangleInfo, int expected) throws InputIndexOutNumberException {
-        assertThat(Math.round(new Rectangle(rectangleInfo).getArea())).isEqualTo(expected);
+        assertThat(Math.round(new Rectangle(rectangleInfo).getArea()))
+                .isEqualTo(expected);
     }
 
     @ParameterizedTest
     @CsvSource(value = {"(10,10)-(22,10)-(22,18)-(10,18):96"}, delimiter = ':')
     @DisplayName("직사각형 면적 구하기")
     void rectangle_area(String rectangleInfo, int expected) throws InputIndexOutNumberException {
-        assertThat(Math.round(new Rectangle(rectangleInfo).getArea())).isEqualTo(expected);
+        assertThat(Math.round(new Rectangle(rectangleInfo).getArea()))
+                .isEqualTo(expected);
     }
 }

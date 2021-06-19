@@ -3,6 +3,8 @@ package coordinate.domain;
 import coordinate.exception.InputIndexOutNumberException;
 import coordinate.exception.InputNotPointException;
 
+import java.util.Objects;
+
 import static coordinate.util.InputConstants.*;
 
 public class Point {
@@ -31,6 +33,11 @@ public class Point {
                 + COMMA
                 + this.y
                 + BRACKET_END;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 
     private void validate(String pointInfo) {

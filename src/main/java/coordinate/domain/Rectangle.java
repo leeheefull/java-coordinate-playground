@@ -30,12 +30,32 @@ public class Rectangle extends Square {
         }
     }
 
-    private boolean isPerfectSquare() {
-        return getTwoDifferentLine().size() == DIFFERENT_LINE_CNT_1;
+    private boolean isRectangle() {
+        if (getTwoDifferentLine().size() != DIFFERENT_LINE_CNT_2) {
+            return false;
+        }
+        return isRightAngle();
     }
 
-    private boolean isRectangle() {
-        return getTwoDifferentLine().size() == DIFFERENT_LINE_CNT_2;
+    private boolean isRightAngle() {
+        List<Line> crossLine = getCrossLine(this.getPoints().get(0));
+        if (Double.isNaN(crossLine.get(0).getInclination()) || crossLine.get(1).getInclination() == 0) {
+            return true;
+        }
+        if (Double.isNaN(crossLine.get(1).getInclination()) || crossLine.get(0).getInclination() == 0) {
+            return true;
+        }
+        return crossLine.get(0).getInclination() * (-1.0) / crossLine.get(0).getInclination() == crossLine.get(1).getInclination();
+    }
+
+    private List<Line> getCrossLine(Point meetPoint) {
+        return this.getLines().stream()
+                .filter(line -> line.containPoint(meetPoint))
+                .collect(Collectors.toList());
+    }
+
+    private boolean isPerfectSquare() {
+        return getTwoDifferentLine().size() == DIFFERENT_LINE_CNT_1;
     }
 
     private List<Double> getTwoDifferentLine() {

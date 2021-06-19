@@ -18,11 +18,11 @@ public class Triangle {
     public Triangle(String triangleInfo) throws InputIndexOutNumberException {
         validate(triangleInfo);
         String[] pointInfos = inputSplit(triangleInfo);
-        this.points = convertPoints(pointInfos);
+        this.points = getPoints(pointInfos);
         this.lines = convertLines();
     }
 
-    public List<Point> convertPoints() {
+    public List<Point> getPoints() {
         return points;
     }
 
@@ -36,7 +36,7 @@ public class Triangle {
     }
 
     public String draw() {
-        return Coordinate.print(this.convertPoints());
+        return Coordinate.print(this.getPoints());
     }
 
     @Override
@@ -66,7 +66,7 @@ public class Triangle {
         return triangleInfo.split(HYPHEN);
     }
 
-    private List<Point> convertPoints(String[] pointInfos) throws InputIndexOutNumberException {
+    private List<Point> getPoints(String[] pointInfos) throws InputIndexOutNumberException {
         return Arrays.asList(
                 new Point(pointInfos[0]),
                 new Point(pointInfos[1]),
