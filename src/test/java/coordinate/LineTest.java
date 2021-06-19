@@ -28,6 +28,13 @@ public class LineTest {
     }
 
     @ParameterizedTest
+    @ValueSource(strings = {"(1,1)-(1,1)"})
+    @DisplayName("점이 같을 때")
+    void equal_points(String lineInfo) {
+        assertThatThrownBy(() -> new Line(lineInfo)).isInstanceOf(InputNotLineException.class);
+    }
+
+    @ParameterizedTest
     @CsvSource(value = {"(7,15)-(19,10):13"}, delimiter = ':')
     @DisplayName("선의 길이를 구하시오")
     void get_line_length(String lineInfo, int expected) throws InputIndexOutNumberException {

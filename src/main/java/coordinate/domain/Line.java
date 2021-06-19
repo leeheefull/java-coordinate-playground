@@ -52,14 +52,22 @@ public class Line {
                 .collect(Collectors.joining(HYPHEN));
     }
 
-    private void validate(String lineInfo) {
-        if (!isLine(lineInfo)) {
+    private void validate(String lineInfo) throws InputIndexOutNumberException {
+        if (!isLine(lineInfo) || isEqualPoints(lineInfo)) {
             throw new InputNotLineException();
         }
     }
 
     private boolean isLine(String lineInfo) {
         return getSeparatorCnt(lineInfo) == LINE_HYPHEN_CNT;
+    }
+
+    private boolean isEqualPoints(String lineInfo) throws InputIndexOutNumberException {
+        List<Point> points = convertPoints(inputSplit(lineInfo));
+        if (points.get(0).getX().getNumber() == points.get(1).getX().getNumber()) {
+            return points.get(0).getY().getNumber() == points.get(1).getY().getNumber();
+        }
+        return false;
     }
 
     private int getSeparatorCnt(String lineInfo) {
