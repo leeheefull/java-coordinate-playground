@@ -6,12 +6,14 @@ import coordinate.util.Coordinate;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class Triangle implements Drawable {
+import static coordinate.domain.InputConstants.HYPHEN;
+import static coordinate.domain.InputConstants.TRIANGLE_HYPHEN_CNT;
+
+public class Triangle {
     private final List<Point> points;
     private final List<Line> lines;
-
-    private static final int SEPARATOR_CNT = 2;
 
     public Triangle(String triangleInfo) throws InputIndexOutNumberException {
         validate(triangleInfo);
@@ -33,9 +35,15 @@ public class Triangle implements Drawable {
         );
     }
 
-    @Override
     public String draw() {
         return Coordinate.print(this.convertPoints());
+    }
+
+    @Override
+    public String toString() {
+        return this.points.stream()
+                .map(Point::toString)
+                .collect(Collectors.joining(HYPHEN));
     }
 
     private void validate(String triangleInfo) {
@@ -45,17 +53,17 @@ public class Triangle implements Drawable {
     }
 
     private boolean isTriangle(String triangleInfo) {
-        return getSeparatorCnt(triangleInfo) == SEPARATOR_CNT;
+        return getSeparatorCnt(triangleInfo) == TRIANGLE_HYPHEN_CNT;
     }
 
     private int getSeparatorCnt(String triangleInfo) {
         return (int) triangleInfo.chars()
-                .filter(c -> c == SEPARATOR.charAt(0))
+                .filter(c -> c == HYPHEN.charAt(0))
                 .count();
     }
 
     private String[] inputSplit(String triangleInfo) {
-        return triangleInfo.split(SEPARATOR);
+        return triangleInfo.split(HYPHEN);
     }
 
     private List<Point> convertPoints(String[] pointInfos) throws InputIndexOutNumberException {
@@ -68,9 +76,9 @@ public class Triangle implements Drawable {
 
     private List<Line> convertLines() throws InputIndexOutNumberException {
         return Arrays.asList(
-                new Line(points.get(0) + SEPARATOR + points.get(1)),
-                new Line(points.get(1) + SEPARATOR + points.get(2)),
-                new Line(points.get(2) + SEPARATOR + points.get(0))
+                new Line(points.get(0) + HYPHEN + points.get(1)),
+                new Line(points.get(1) + HYPHEN + points.get(2)),
+                new Line(points.get(2) + HYPHEN + points.get(0))
         );
     }
 

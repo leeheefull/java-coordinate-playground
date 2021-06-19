@@ -28,7 +28,7 @@ public class Number {
         if (!isNumber(numberInfo)) {
             throw new InputNotNumberException();
         }
-        if (isOver(numberInfo)) {
+        if (isOver(Integer.parseInt(numberInfo))) {
             throw new InputIndexOutNumberException();
         }
     }
@@ -37,8 +37,7 @@ public class Number {
         return numberInfo.matches(NUMBER_REGEX);
     }
 
-    private boolean isOver(String numberInfo) {
-        int number = Integer.parseInt(numberInfo);
+    private boolean isOver(int number) {
         return number < MIN_NUMBER || MAX_NUMBER < number;
     }
 }

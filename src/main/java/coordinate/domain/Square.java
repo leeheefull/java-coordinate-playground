@@ -6,12 +6,14 @@ import coordinate.util.Coordinate;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class Square implements Drawable {
+import static coordinate.domain.InputConstants.HYPHEN;
+import static coordinate.domain.InputConstants.SQUARE_HYPHEN_CNT;
+
+public class Square {
     private final List<Point> points;
     private final List<Line> lines;
-
-    private static final int SEPARATOR_CNT = 3;
 
     public Square(String squareInfo) throws InputIndexOutNumberException {
         validate(squareInfo);
@@ -28,9 +30,15 @@ public class Square implements Drawable {
         return lines;
     }
 
-    @Override
     public String draw() {
         return Coordinate.print(this.getPoints());
+    }
+
+    @Override
+    public String toString() {
+        return this.points.stream()
+                .map(Point::toString)
+                .collect(Collectors.joining(HYPHEN));
     }
 
     private void validate(String squareInfo) {
@@ -40,17 +48,17 @@ public class Square implements Drawable {
     }
 
     private boolean isSquare(String squareInfo) {
-        return getSeparatorCnt(squareInfo) == SEPARATOR_CNT;
+        return getSeparatorCnt(squareInfo) == SQUARE_HYPHEN_CNT;
     }
 
     private int getSeparatorCnt(String squareInfo) {
         return (int) squareInfo.chars()
-                .filter(c -> c == SEPARATOR.charAt(0))
+                .filter(c -> c == HYPHEN.charAt(0))
                 .count();
     }
 
     private String[] inputSplit(String squareInfo) {
-        return squareInfo.split(SEPARATOR);
+        return squareInfo.split(HYPHEN);
     }
 
     private List<Point> convertPoints(String[] pointInfos) throws InputIndexOutNumberException {
@@ -64,10 +72,10 @@ public class Square implements Drawable {
 
     private List<Line> convertLines() throws InputIndexOutNumberException {
         return Arrays.asList(
-                new Line(points.get(0) + SEPARATOR + points.get(1)),
-                new Line(points.get(1) + SEPARATOR + points.get(2)),
-                new Line(points.get(2) + SEPARATOR + points.get(3)),
-                new Line(points.get(3) + SEPARATOR + points.get(0))
+                new Line(points.get(0) + HYPHEN + points.get(1)),
+                new Line(points.get(1) + HYPHEN + points.get(2)),
+                new Line(points.get(2) + HYPHEN + points.get(3)),
+                new Line(points.get(3) + HYPHEN + points.get(0))
         );
     }
 }

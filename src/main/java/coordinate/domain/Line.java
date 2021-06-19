@@ -6,11 +6,13 @@ import coordinate.util.Coordinate;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class Line implements Drawable {
+import static coordinate.domain.InputConstants.HYPHEN;
+import static coordinate.domain.InputConstants.LINE_HYPHEN_CNT;
+
+public class Line {
     private final List<Point> points;
-
-    private static final int SEPARATOR_CNT = 1;
 
     public Line(String lineInfo) throws InputIndexOutNumberException {
         validate(lineInfo);
@@ -28,14 +30,15 @@ public class Line implements Drawable {
         return Math.sqrt(calX + calY);
     }
 
-    @Override
     public String draw() {
         return Coordinate.print(this.getPoints());
     }
 
     @Override
     public String toString() {
-        return this.points.get(0) + SEPARATOR + this.points.get(1);
+        return this.points.stream()
+                .map(Point::toString)
+                .collect(Collectors.joining(HYPHEN));
     }
 
     private void validate(String lineInfo) {
@@ -45,17 +48,17 @@ public class Line implements Drawable {
     }
 
     private boolean isLine(String lineInfo) {
-        return getSeparatorCnt(lineInfo) == SEPARATOR_CNT;
+        return getSeparatorCnt(lineInfo) == LINE_HYPHEN_CNT;
     }
 
     private int getSeparatorCnt(String lineInfo) {
         return (int) lineInfo.chars()
-                .filter(c -> c == SEPARATOR.charAt(0))
+                .filter(c -> c == HYPHEN.charAt(0))
                 .count();
     }
 
     private String[] inputSplit(String lineInfo) {
-        return lineInfo.split(SEPARATOR);
+        return lineInfo.split(HYPHEN);
     }
 
     private List<Point> convertPoints(String[] pointInfos) throws InputIndexOutNumberException {

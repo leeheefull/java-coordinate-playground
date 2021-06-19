@@ -21,20 +21,16 @@ public class LineTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {
-            "(1,2)~(3,4)",
-            "(1,2)=(3,4)",
-            "(1,2)+(3,4)"
-    })
+    @ValueSource(strings = {"(1,2)~(3,4)", "(1,2)=(3,4)", "(1,2)+(3,4)"})
     @DisplayName("선이 아닌 것이 입력될 경우")
     void not_line(String lineInfo) {
         assertThatThrownBy(() -> new Line(lineInfo)).isInstanceOf(InputNotLineException.class);
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"(7,15)-(19,10):13.0"}, delimiter = ':')
+    @CsvSource(value = {"(7,15)-(19,10):13"}, delimiter = ':')
     @DisplayName("선의 길이를 구하시오")
-    void get_line_length(String lineInfo, double expected) throws InputIndexOutNumberException {
-        assertThat(new Line(lineInfo).getLength()).isEqualTo(expected);
+    void get_line_length(String lineInfo, int expected) throws InputIndexOutNumberException {
+        assertThat(Math.round(new Line(lineInfo).getLength())).isEqualTo(expected);
     }
 }
