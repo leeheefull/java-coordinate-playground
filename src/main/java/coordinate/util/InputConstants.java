@@ -1,4 +1,4 @@
-package coordinate.domain;
+package coordinate.util;
 
 public class InputConstants {
     public static final String SEPARATORS = "[,)(]";

@@ -3,7 +3,7 @@ package coordinate.domain;
 import coordinate.exception.InputIndexOutNumberException;
 import coordinate.exception.InputNotPointException;
 
-import static coordinate.domain.InputConstants.*;
+import static coordinate.util.InputConstants.*;
 
 public class Point {
     private final Number x;

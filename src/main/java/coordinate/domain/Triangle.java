@@ -8,8 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static coordinate.domain.InputConstants.HYPHEN;
-import static coordinate.domain.InputConstants.TRIANGLE_HYPHEN_CNT;
+import static coordinate.util.InputConstants.HYPHEN;
+import static coordinate.util.InputConstants.TRIANGLE_HYPHEN_CNT;
 
 public class Triangle {
     private final List<Point> points;
