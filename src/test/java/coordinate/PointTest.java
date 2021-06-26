@@ -13,7 +13,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 public class PointTest {
     @ParameterizedTest
-    @CsvSource(value = {"(1,2):1:2", "(10,1):10:1"}, delimiter = ':')
+    @CsvSource(value = {"1,2:1:2", "10,1:10:1"}, delimiter = ':')
     @DisplayName("점이 잘 저장 되는지")
     void save_point(String pointInfo, int expectedX, int expectedY) throws InputIndexOutNumberException {
         assertThat(new Point(pointInfo).getX().getNumber()).isEqualTo(expectedX);
@@ -21,7 +21,7 @@ public class PointTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"[1,2]", "(3/4)"})
+    @ValueSource(strings = {"1.2", "3/4"})
     @DisplayName("점이 아닌 것이 입력될 경우")
     void not_point(String pointInfo) {
         assertThatThrownBy(() -> new Point(pointInfo))

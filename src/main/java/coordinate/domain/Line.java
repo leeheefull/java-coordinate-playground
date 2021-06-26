@@ -1,37 +1,27 @@
 package coordinate.domain;
 
-import coordinate.exception.InputIndexOutNumberException;
 import coordinate.exception.InputNotLineException;
-import coordinate.util.Coordinate;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static coordinate.util.InputConstants.HYPHEN;
-import static coordinate.util.InputConstants.LINE_HYPHEN_CNT;
-
-public class Line {
+public class Line implements Figure {
     private final List<Point> points;
 
-    public Line(String lineInfo) throws InputIndexOutNumberException {
-        validate(lineInfo);
-        String[] pointInfos = inputSplit(lineInfo);
-        this.points = convertPoints(pointInfos);
+    public Line(List<Point> linePoints) {
+        validate(linePoints);
+        this.points = linePoints;
     }
 
+    @Override
     public List<Point> getPoints() {
-        return points;
+        return this.points;
     }
 
-    public double getLength() {
+    @Override
+    public double getArea() {
         double calX = Math.pow(getXGap(), 2);
         double calY = Math.pow(getYGap(), 2);
         return Math.sqrt(calX + calY);
-    }
-
-    public String draw() {
-        return Coordinate.print(this.getPoints());
     }
 
     public double getInclination() {
@@ -45,46 +35,22 @@ public class Line {
                 .count() == 1;
     }
 
-    @Override
-    public String toString() {
-        return this.points.stream()
-                .map(Point::toString)
-                .collect(Collectors.joining(HYPHEN));
-    }
-
-    private void validate(String lineInfo) throws InputIndexOutNumberException {
-        if (!isLine(lineInfo) || isEqualPoints(lineInfo)) {
+    private void validate(List<Point> linePoints) {
+        if (isEqualPoints(linePoints)) {
             throw new InputNotLineException();
         }
     }
 
-    private boolean isLine(String lineInfo) {
-        return getSeparatorCnt(lineInfo) == LINE_HYPHEN_CNT;
+    private boolean isEqualPoints(List<Point> linePoints) {
+        return isXEqual(linePoints) && isYEqual(linePoints);
     }
 
-    private boolean isEqualPoints(String lineInfo) throws InputIndexOutNumberException {
-        List<Point> points = convertPoints(inputSplit(lineInfo));
-        if (points.get(0).getX().getNumber() == points.get(1).getX().getNumber()) {
-            return points.get(0).getY().getNumber() == points.get(1).getY().getNumber();
-        }
-        return false;
+    private boolean isXEqual(List<Point> linePoints) {
+        return linePoints.get(0).getX().getNumber() == linePoints.get(1).getX().getNumber();
     }
 
-    private int getSeparatorCnt(String lineInfo) {
-        return (int) lineInfo.chars()
-                .filter(c -> c == HYPHEN.charAt(0))
-                .count();
-    }
-
-    private String[] inputSplit(String lineInfo) {
-        return lineInfo.split(HYPHEN);
-    }
-
-    private List<Point> convertPoints(String[] pointInfos) throws InputIndexOutNumberException {
-        return Arrays.asList(
-                new Point(pointInfos[0]),
-                new Point(pointInfos[1])
-        );
+    private boolean isYEqual(List<Point> linePoints) {
+        return linePoints.get(0).getY().getNumber() == linePoints.get(1).getY().getNumber();
     }
 
     private int getXGap() {

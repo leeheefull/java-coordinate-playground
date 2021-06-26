@@ -19,11 +19,6 @@ public class Number {
         return this.number;
     }
 
-    @Override
-    public String toString() {
-        return this.number + "";
-    }
-
     private void validate(String numberInfo) throws InputIndexOutNumberException {
         if (!isNumber(numberInfo)) {
             throw new InputNotNumberException();

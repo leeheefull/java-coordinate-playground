@@ -3,19 +3,22 @@ package coordinate.domain;
 import coordinate.exception.InputIndexOutNumberException;
 import coordinate.exception.InputNotPointException;
 
-import java.util.Objects;
-
-import static coordinate.util.InputConstants.*;
-
 public class Point {
     private final Number x;
     private final Number y;
 
+    private static final String DELIMITER = ",";
+
     public Point(String pointInfo) throws InputIndexOutNumberException {
         validate(pointInfo);
         String[] numberInfos = inputSplit(pointInfo);
-        this.x = new Number(numberInfos[1]);
-        this.y = new Number(numberInfos[2]);
+        this.x = new Number(numberInfos[0]);
+        this.y = new Number(numberInfos[1]);
+    }
+
+    public Point(Number x, Number y) {
+        this.x = x;
+        this.y = y;
     }
 
     public Number getX() {
@@ -26,20 +29,6 @@ public class Point {
         return this.y;
     }
 
-    @Override
-    public String toString() {
-        return BRACKET_START
-                + this.x
-                + COMMA
-                + this.y
-                + BRACKET_END;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(x, y);
-    }
-
     private void validate(String pointInfo) {
         if (!isPoint(pointInfo)) {
             throw new InputNotPointException();
@@ -47,12 +36,10 @@ public class Point {
     }
 
     private boolean isPoint(String pointInfo) {
-        return pointInfo.contains(BRACKET_START)
-                && pointInfo.contains(BRACKET_END)
-                && pointInfo.contains(COMMA);
+        return pointInfo.contains(DELIMITER);
     }
 
     private String[] inputSplit(String pointInfo) {
-        return pointInfo.split(SEPARATORS);
+        return pointInfo.split(DELIMITER);
     }
 }

@@ -1,6 +1,5 @@
 package coordinate.domain;
 
-import coordinate.exception.InputIndexOutNumberException;
 import coordinate.exception.InputNotRectangleException;
 
 import java.util.List;
@@ -10,11 +9,12 @@ public class Rectangle extends Square {
     private static final int DIFFERENT_LINE_CNT_1 = 1;
     private static final int DIFFERENT_LINE_CNT_2 = 2;
 
-    public Rectangle(String rectangleInfo) throws InputIndexOutNumberException {
+    public Rectangle(List<Point> rectangleInfo) {
         super(rectangleInfo);
         validate();
     }
 
+    @Override
     public double getArea() {
         if (isPerfectSquare()) {
             return Math.pow(getTwoDifferentLine().get(0), 2);
@@ -31,21 +31,22 @@ public class Rectangle extends Square {
     }
 
     private boolean isRectangle() {
-        if (getTwoDifferentLine().size() != DIFFERENT_LINE_CNT_2) {
-            return false;
-        }
-        return isRightAngle();
+        return isRightAngle() && getTwoDifferentLine().size() == DIFFERENT_LINE_CNT_2;
     }
 
     private boolean isRightAngle() {
-        List<Line> crossLine = getCrossLine(this.getPoints().get(0));
-        if (Double.isNaN(crossLine.get(0).getInclination()) || crossLine.get(1).getInclination() == 0) {
-            return true;
-        }
-        if (Double.isNaN(crossLine.get(1).getInclination()) || crossLine.get(0).getInclination() == 0) {
-            return true;
-        }
-        return crossLine.get(0).getInclination() * (-1.0) / crossLine.get(0).getInclination() == crossLine.get(1).getInclination();
+        List<Line> crossLine = getCrossLine(this.getLines().get(0).getPoints().get(0));
+        return isInclinationInfinity(crossLine) || isTwoLineRightAngle(crossLine);
+    }
+
+    private boolean isTwoLineRightAngle(List<Line> crossLine) {
+        return crossLine.get(0).getInclination() * (-1.0) / crossLine.get(0).getInclination()
+                == crossLine.get(1).getInclination();
+    }
+
+    private boolean isInclinationInfinity(List<Line> crossLine) {
+        return Double.isNaN(crossLine.get(0).getInclination()) || crossLine.get(1).getInclination() == 0
+                || Double.isNaN(crossLine.get(1).getInclination()) || crossLine.get(0).getInclination() == 0;
     }
 
     private List<Line> getCrossLine(Point meetPoint) {
@@ -60,7 +61,7 @@ public class Rectangle extends Square {
 
     private List<Double> getTwoDifferentLine() {
         return this.getLines().stream()
-                .map(Line::getLength)
+                .map(Line::getArea)
                 .distinct()
                 .collect(Collectors.toList());
     }

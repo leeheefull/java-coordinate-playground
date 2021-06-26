@@ -7,3 +7,9 @@ public class CoordinateMain {
         new CoordinateController().run();
     }
 }
+
+/*  예시
+        (10,10)-(14,15)
+        (10,10)-(14,15)-(20,8)
+        (10,10)-(22,10)-(22,18)-(10,18)
+ */

@@ -1,81 +1,63 @@
 package coordinate.domain;
 
-import coordinate.exception.InputIndexOutNumberException;
 import coordinate.exception.InputNotSquareException;
-import coordinate.util.Coordinate;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static coordinate.util.InputConstants.HYPHEN;
-import static coordinate.util.InputConstants.SQUARE_HYPHEN_CNT;
-
-public class Square {
-    private final List<Point> points;
+public abstract class Square implements Figure {
     private final List<Line> lines;
 
-    public Square(String squareInfo) throws InputIndexOutNumberException {
-        validate(squareInfo);
-        String[] pointInfos = inputSplit(squareInfo);
-        this.points = convertPoints(pointInfos);
-        this.lines = convertLines();
-    }
-
-    public List<Point> getPoints() {
-        return points;
+    public Square(List<Point> squarePoints) {
+        validate(squarePoints);
+        this.lines = convertLines(squarePoints);
     }
 
     public List<Line> getLines() {
-        return lines;
-    }
-
-    public String draw() {
-        return Coordinate.print(this.getPoints());
+        return this.lines;
     }
 
     @Override
-    public String toString() {
-        return this.points.stream()
-                .map(Point::toString)
-                .collect(Collectors.joining(HYPHEN));
+    public List<Point> getPoints() {
+        return Arrays.asList(
+                new Point(this.lines.get(0).getPoints().get(0).getX(), this.lines.get(0).getPoints().get(0).getY()),
+                new Point(this.lines.get(1).getPoints().get(0).getX(), this.lines.get(1).getPoints().get(0).getY()),
+                new Point(this.lines.get(2).getPoints().get(0).getX(), this.lines.get(2).getPoints().get(0).getY()),
+                new Point(this.lines.get(3).getPoints().get(0).getX(), this.lines.get(3).getPoints().get(0).getY())
+        );
     }
 
-    private void validate(String squareInfo) {
-        if (!isSquare(squareInfo)) {
+    @Override
+    public abstract double getArea();
+
+    private void validate(List<Point> squarePoints) {
+        if (isNotSquare(squarePoints)) {
             throw new InputNotSquareException();
         }
     }
 
-    private boolean isSquare(String squareInfo) {
-        return getSeparatorCnt(squareInfo) == SQUARE_HYPHEN_CNT;
+    private boolean isNotSquare(List<Point> squarePoints) {
+        return isXEqual(squarePoints) || isYEqual(squarePoints);
     }
 
-    private int getSeparatorCnt(String squareInfo) {
-        return (int) squareInfo.chars()
-                .filter(c -> c == HYPHEN.charAt(0))
-                .count();
+    private boolean isXEqual(List<Point> squarePoints) {
+        return squarePoints.get(0).getX().getNumber() == squarePoints.get(1).getX().getNumber()
+                && squarePoints.get(1).getX().getNumber() == squarePoints.get(2).getX().getNumber()
+                && squarePoints.get(2).getX().getNumber() == squarePoints.get(3).getX().getNumber();
     }
 
-    private String[] inputSplit(String squareInfo) {
-        return squareInfo.split(HYPHEN);
+    private boolean isYEqual(List<Point> squarePoints) {
+        return squarePoints.get(0).getY().getNumber() == squarePoints.get(1).getY().getNumber()
+                && squarePoints.get(1).getY().getNumber() == squarePoints.get(2).getY().getNumber()
+                && squarePoints.get(2).getY().getNumber() == squarePoints.get(3).getY().getNumber();
     }
 
-    private List<Point> convertPoints(String[] pointInfos) throws InputIndexOutNumberException {
+    private List<Line> convertLines(List<Point> squarePoints) {
         return Arrays.asList(
-                new Point(pointInfos[0]),
-                new Point(pointInfos[1]),
-                new Point(pointInfos[2]),
-                new Point(pointInfos[3])
-        );
-    }
-
-    private List<Line> convertLines() throws InputIndexOutNumberException {
-        return Arrays.asList(
-                new Line(points.get(0) + HYPHEN + points.get(1)),
-                new Line(points.get(1) + HYPHEN + points.get(2)),
-                new Line(points.get(2) + HYPHEN + points.get(3)),
-                new Line(points.get(3) + HYPHEN + points.get(0))
+                new Line(Arrays.asList(squarePoints.get(0), squarePoints.get(1))),
+                new Line(Arrays.asList(squarePoints.get(1), squarePoints.get(2))),
+                new Line(Arrays.asList(squarePoints.get(2), squarePoints.get(3))),
+                new Line(Arrays.asList(squarePoints.get(3), squarePoints.get(0)))
         );
     }
 }
