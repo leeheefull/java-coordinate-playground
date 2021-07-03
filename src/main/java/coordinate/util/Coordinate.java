@@ -4,7 +4,7 @@ import coordinate.domain.Point;
 
 import java.util.List;
 
-public class Coordinate {
+public final class Coordinate {
     private static final int COORDINATE_SIZE = 24;
     private static final String ORIGIN = "┼";
     private static final String X_AXIS = "─";
@@ -14,64 +14,65 @@ public class Coordinate {
     private static final String BLANK = " ";
     private static final String POINT = "●";
 
-    public static String print(List<Point> points) {
+    private Coordinate() {
+    }
+
+    public static String makeOutput(List<Point> points) {
         StringBuilder output = new StringBuilder();
         for (int i = COORDINATE_SIZE; 0 <= i; i--) {
-            drawOriginAndXAxis(output, i);
-            drawYAxisAndBlankAndPoints(points, output, i);
+            output.append(drawOriginAndXAxis(i));
+            output.append(drawYAxisAndBlankAndPoints(points, i));
             output.append(LINE_BREAK);
         }
         return output.toString();
     }
 
-    private static void drawOriginAndXAxis(StringBuilder output, int i) {
+    private static StringBuilder drawOriginAndXAxis(int i) {
+        StringBuilder output = new StringBuilder();
         if (i == 0) {
-            drawOrigin(output, i);
-            drawXAxis(output);
+            output.append(drawOrigin(i));
+            output.append(drawXAxis());
         }
+        return output;
     }
 
-    private static void drawOrigin(StringBuilder output, int i) {
-        output.append(i).append(TAB).append(ORIGIN);
+    private static StringBuilder drawOrigin(int i) {
+        return new StringBuilder().append(i).append(TAB).append(ORIGIN);
     }
 
-    private static void drawXAxis(StringBuilder output) {
+    private static StringBuilder drawXAxis() {
+        StringBuilder output = new StringBuilder();
         for (int j = 0; j <= COORDINATE_SIZE; j++) {
             output.append(X_AXIS);
         }
+        return output;
     }
 
-    private static void drawYAxisAndBlankAndPoints(List<Point> points, StringBuilder output, int i) {
+    private static StringBuilder drawYAxisAndBlankAndPoints(List<Point> points, int i) {
+        StringBuilder output = new StringBuilder();
         if (0 < i) {
-            drawYAxis(output, i);
-            drawBlankAndPoints(points, output, i);
+            output.append(drawYAxis(i));
+            output.append(drawBlankAndPoints(points, i));
         }
+        return output;
     }
 
-    private static void drawYAxis(StringBuilder output, int i) {
-        output.append(i).append(TAB).append(Y_AXIS);
+    private static StringBuilder drawYAxis(int i) {
+        return new StringBuilder().append(i).append(TAB).append(Y_AXIS);
     }
 
-    private static void drawBlankAndPoints(List<Point> points, StringBuilder output, int i) {
+    private static StringBuilder drawBlankAndPoints(List<Point> points, int i) {
+        StringBuilder output = new StringBuilder();
         for (int j = 1; j <= COORDINATE_SIZE; j++) {
-            j = drawPoints(points, output, i, j);
+            for (Point point : points) {
+                if (isPointPosition(i, j, point)) {
+                    output.append(POINT);
+                    j++;
+                }
+            }
             output.append(BLANK);
         }
-    }
-
-    private static int drawPoints(List<Point> points, StringBuilder output, int i, int j) {
-        for (Point point : points) {
-            j = drawPoint(output, i, j, point);
-        }
-        return j;
-    }
-
-    private static int drawPoint(StringBuilder output, int i, int j, Point point) {
-        if (isPointPosition(i, j, point)) {
-            output.append(POINT);
-            j++;
-        }
-        return j;
+        return output;
     }
 
     private static boolean isPointPosition(int i, int j, Point point) {

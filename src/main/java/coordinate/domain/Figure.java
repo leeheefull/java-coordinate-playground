@@ -10,6 +10,6 @@ public interface Figure {
     double getArea();
 
     default String draw(List<Point> points) {
-        return Coordinate.print(points);
+        return Coordinate.makeOutput(points);
     }
 }

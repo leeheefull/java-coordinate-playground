@@ -113,8 +113,6 @@
 - [X] 세 점이 동일 선상에 있으면 삼각형이 아님
 - [X] "-" 두 개로 구분한 경우 삼각형으로 간주
 
----
-
 ### 클래스 다이어그램
 
 ![image](https://user-images.githubusercontent.com/58816862/123501221-4e21e680-d67e-11eb-9cf9-719fd412afa4.png)

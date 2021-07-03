@@ -43,7 +43,7 @@ public enum FigureType {
                 .filter(figureType -> figureType.pointCnt == points.size())
                 .map(figureType -> figureType.getFigure(points))
                 .findFirst()
-                .get();
+                .orElseThrow(RuntimeException::new);
     }
 
     private static List<Point> convertPoints(String figureInfo) throws InputIndexOutNumberException {
